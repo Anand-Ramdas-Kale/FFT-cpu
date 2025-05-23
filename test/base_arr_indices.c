@@ -34,19 +34,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
-int GLOBAL_SPACE_SIZE = 1 << 12;
-int static_space[1 << 12];
-
-/**
- * @brief   divide and conquer mechanism of coefficient grouping / evaluation at each lvl
- * @param   r  degree of polynomial and last index of array
- * @param   coefficients  coefficient array
- * @return  void
- */
-void divide_and_conquer_array_index_division(int r, int *coefficients) {
-    return;
-}
+#define GLOBAL_SPACE_SIZE (1 << 12)
+int static_space1[GLOBAL_SPACE_SIZE];
+int static_space2[GLOBAL_SPACE_SIZE];
+int temp[GLOBAL_SPACE_SIZE];
 
 int nearest_power2(int r) {
     r -= 1;
@@ -82,12 +75,43 @@ int reverse_bits(int i, int bit_length) {
     return reversed;
 }
 
-void bit_reversal_array_index_division(int r, int *coefficients, bool print_indices_only) {
+/**
+ * @brief   divide and conquer mechanism of coefficient grouping / evaluation at each lvl
+ * @param   r  degree of polynomial and last index of array
+ * @param   coefficients  coefficient array
+ * @return  void
+ */
+void divide_and_conquer_array_index_division(int r, int *coefficients, int *temp) {
+    if (r > 1) {
+        int *left_base = temp;
+        int size = r >> 1;
+        int *right_base = temp + size;
+        for (int i = 0; i < size; i += 1) {
+            left_base[i] = coefficients[i << 1];
+            right_base[i] = coefficients[(i << 1) + 1];
+        }
+        memcpy(coefficients, temp, sizeof (int) * r);
+        divide_and_conquer_array_index_division(size, coefficients, left_base);
+        divide_and_conquer_array_index_division(size, coefficients + size, right_base);
+    }
+}
+
+void divide_and_conquer_array_index_division_wrapper(int r, int *coefficients) {
     int n = nearest_power2(r);
     if (n > GLOBAL_SPACE_SIZE) {
-        printf("increase \"global_space_size\"\n");
+        printf("Increase \"GLOBAL_SPACE_SIZE\" to accomodate n = %d\n", n);
         return;
     }
+    memcpy(static_space1, coefficients, r * sizeof(int));
+    memset(((int *)static_space1) + r, 0, sizeof static_space1 - r * sizeof(int));
+    divide_and_conquer_array_index_division(n, static_space1, temp);
+    for (int i = 0; i < n; i += 1) {
+        printf("%d -> %d\n", i, static_space1[i]);
+    }
+}
+
+void bit_reversal_array_index_division(int r, int *coefficients, bool print_indices_only) {
+    int n = nearest_power2(r);
     int bit_length = count_bits(n) - 1;
     printf("bit_length = %d\n", bit_length);
     if (print_indices_only) {
@@ -119,6 +143,7 @@ int main() {
     for (int i = 0; i <= r; i += 1) {
         coefficients[i] = i;
     }
+    divide_and_conquer_array_index_division_wrapper(r, coefficients);
     bit_reversal_array_index_division(r, coefficients, false);
     return 0;
 }
