@@ -28,7 +28,97 @@
            5          a_5         101            a₅              101 (5)
            6          a_3         110            a₃              011 (3)
            7          a_7         111            a₇              111 (7)
+        ------------------------------------------------------------------
  * */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
+int GLOBAL_SPACE_SIZE = 1 << 12;
+int static_space[1 << 12];
 
+/**
+ * @brief   divide and conquer mechanism of coefficient grouping / evaluation at each lvl
+ * @param   r  degree of polynomial and last index of array
+ * @param   coefficients  coefficient array
+ * @return  void
+ */
+void divide_and_conquer_array_index_division(int r, int *coefficients) {
+    return;
+}
+
+int nearest_power2(int r) {
+    r -= 1;
+    r |= (r >> 1);
+    r |= (r >> 2);
+    r |= (r >> 4);
+    r |= (r >> 8);
+    r |= (r >> 16);
+    return r + 1;
+}
+
+void print_bits(int num) {
+    
+}
+
+int count_bits(int n) {
+    int count = 0;
+    while (n) {
+        count += 1;
+        n >>= 1;
+    }
+    return count;
+}
+
+int reverse_bits(int i, int bit_length) {
+    int reversed = 0;
+    while (bit_length) {
+        reversed <<= 1;
+        bit_length -= 1;
+        reversed |= (i & 1);
+        i >>= 1;
+    }
+    return reversed;
+}
+
+void bit_reversal_array_index_division(int r, int *coefficients, bool print_indices_only) {
+    int n = nearest_power2(r);
+    if (n > GLOBAL_SPACE_SIZE) {
+        printf("increase \"global_space_size\"\n");
+        return;
+    }
+    int bit_length = count_bits(n) - 1;
+    printf("bit_length = %d\n", bit_length);
+    if (print_indices_only) {
+        for (int i = 0; i < n; i += 1) {
+            int coefficient_index = reverse_bits(i, bit_length);
+            printf("%d -> %d\n", i, coefficient_index);
+        }
+        return;
+    }
+    for (int i = 0; i < n; i += 1) {
+        int coefficient_index = reverse_bits(i, bit_length);
+        printf("%d -> %d\n", i,(coefficient_index <= r) ? coefficients[coefficient_index] : 0);
+    }
+}
+
+int main() {
+    int r = 12;
+    // int x = nearest_power2(r);
+    // int l = count_bits(x);
+    //
+    // printf("r = %d\n", r);
+    // printf("x = %d\n", x);
+    // printf("l = %d\n", l);
+    // printf("=--=--=--=--=--=\n");
+    // for (int i = 0; i < x; i += 1) {
+    //     printf("%d - %d\n", i, reverse_bits(i, l - 1));
+    // }
+    int *coefficients = malloc(sizeof(int[r]));
+    for (int i = 0; i <= r; i += 1) {
+        coefficients[i] = i;
+    }
+    bit_reversal_array_index_division(r, coefficients, false);
+    return 0;
+}
