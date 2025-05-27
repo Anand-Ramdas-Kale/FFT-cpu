@@ -1,0 +1,9 @@
+Ctrl + v and then "u" + "Unicode"
+
+| Symbol | Unicode |
+| ------ | ------- |
+| α      | 03B1    |
+| β      | 03B2    |
+| θ      | 03B8    |
+| π      | 03C0    |
+| ·      | 00B7    |

@@ -17,7 +17,7 @@ typedef struct {
 
 typedef struct {
     real a, b;
-} imf64_t;
+} imf64_t; // TODO: I will fix this
 
 /*
     I don't want the final implementation of fft to have much overhead of procedures and loops and brances,
