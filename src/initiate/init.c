@@ -1,6 +1,7 @@
 #include "../../include/complex.h"
 #include "../../include/bits.h"
 #include <math.h>
+#include <stdbool.h>
 
 /*
  *  this is the code that initializes all of the roots of unity needed by user

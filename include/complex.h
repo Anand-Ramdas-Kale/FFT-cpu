@@ -28,3 +28,7 @@ typedef struct {
     I AM DOING WHAT MATTERS FOR PERFORMANCE, (IF NOT YET...)
 */
 imf64_t mul_imf64_t (imf64_t x, imf64_t y);
+imf64_t add_imf64_t (imf64_t x, imf64_t y);
+
+void mul_imf64_tp (imf64_t* x, imf64_t* y, imf64_t* z);
+void add_imf64_tp (imf64_t* x, imf64_t* y, imf64_t* z);
