@@ -9,7 +9,7 @@ int nearest_power2(int r) {
 }
 
 void print_bits(int num) {
-    
+    (void) num;
 }
 
 int count_bits(int n) {

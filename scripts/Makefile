@@ -1,6 +1,6 @@
 # === CONFIGURATION ===
 CC := gcc
-CFLAGS := -Wall -Wextra -Iinclude -std=c243
+CFLAGS := -Wall -Wextra -Iinclude -std=c23
 LIBS := -lm
 SRC_DIR := src
 BUILD_DIR := build

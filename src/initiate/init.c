@@ -2,6 +2,7 @@
 #include "../../include/bits.h"
 #include <math.h>
 #include <stdbool.h>
+# define M_PIf		3.14159265358979323846f
 
 /*
  *  this is the code that initializes all of the roots of unity needed by user
@@ -23,7 +24,7 @@ bool init_root(imf64_t *reserved, int reservedSize, int nRoot) {
         return false;
     }
     for (int i = 0; i < nRoot; ++i) {
-        reserved[i] = (imf64_t){cosf(1.0f * i / (real)nRoot), sinf(1.0f * i / (real)nRoot)};
+        reserved[i] = (imf64_t){cos(2 * M_PIf * i / (real)nRoot), sin(2 * M_PIf * i / (real)nRoot)};
     }
     return true;
 }

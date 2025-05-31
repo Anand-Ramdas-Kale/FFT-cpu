@@ -9,7 +9,7 @@
     ... we will expoit instruction level parallelism in future
 */
 
-typedef float real;
+typedef double real;
 
 typedef struct {
     int a, b;
@@ -32,3 +32,7 @@ imf64_t add_imf64_t (imf64_t x, imf64_t y);
 
 void mul_imf64_tp (imf64_t* x, imf64_t* y, imf64_t* z);
 void add_imf64_tp (imf64_t* x, imf64_t* y, imf64_t* z);
+
+// rough fft-functions
+imf64_t evaluate(imf64_t *P, imf64_t *Temp, int nterms, imf64_t x);
+void conjugate(imf64_t *C);
